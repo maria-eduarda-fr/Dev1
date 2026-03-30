@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>{{reporter.nome|capfirst}}</h1>
+{% endblock title %}
+
+{% block content %}
+    <div class="contente">
+      <div class="row">
+        <strong>CPF: </strong>  <p>{{reporter.cpf}}</p>
+        <strong>Email:</strong> <p>{{reporter.email}}</p>
+      </div>
+    </div>
+
+  <div>
+    <a class="btn btn-outline-light btn-lg" role="button"
+      href="{% url 'relacionamento:reporter' %}">
+      <i class="bi bi-arrow-left"></i>Voltar
+    </a>
+  </div>
+{% endblock content %}

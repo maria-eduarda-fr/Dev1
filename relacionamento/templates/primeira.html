@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+
+{% block title%}
+    <h2> {{mensagem|capfirst}}</h2>
+{% endblock title%}
+
+
+{% block content%}
+    <h3> {{horario}}</h3>
+    <h5>{{endereco}}</h5>
+{% endblock content%}

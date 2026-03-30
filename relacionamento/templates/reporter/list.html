@@ -1,0 +1,144 @@
+{%extends 'base.html' %}
+
+{% block title%}
+    {% if lista%}
+    <h1>Lista de Reporter</h1>
+    {% else %}
+    <h1>Nenhum exemplo cadastrado!</h1>
+    {% endif %}
+{% endblock title%}
+
+{% block content%}
+
+<div>
+    {% if perms.relacionamento.add_reporter%}
+        <a class="btn btn-outline-success btn-lg" role="button"
+               data-bs-toggle="tooltip" data-bs-placement="top"
+               title="Criar com funções"
+               href="{% url 'relacionamento:reporter_create' %}">
+                <i class="bi bi-plus-square"></i>
+        </a>
+    {% endif %}
+
+    <a class="btn btn-outline-secondary btn-lg" role="button"
+           data-bs-toggle="tooltip" data-bs-placement="top"
+           title="Criar com funções"
+           href="{% url 'relacionamento:classe_reporter_create' %}">
+            <i class="bi bi-plus-square"></i>
+    </a>
+</div>
+{% if lista%}
+<table class="table table-dark table-striped">
+    <thead>
+    <th>Nome</th>
+    <th>CPF</th>
+    <th>Email</th>
+    <th>Paper</th>
+    <th>Ações funções</th>
+    <th>Ações classes</th>
+    <th>Ações class generica</th>
+    </thead>
+    <tbody>
+    {% for objeto in lista %}
+    <tr>
+        <td>{{objeto.nome}}</td>
+        <td>{{objeto.cpf}}</td>
+        <td>{{objeto.email}}</td>
+        <td>
+            {% for i in objeto.paper_set.all %}
+            {{ i.titulo }}<br/>
+            {% endfor %}
+        </td>
+        <td>
+            <div>
+                {% if perms.relacionamento.view_reporter%}
+                    <a class="btn btn-outline-primary btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Detalhar com funções"
+                       href="{% url 'relacionamento:reporter_detail' objeto.id %}">
+                        <i class="bi bi-card-list"></i>
+                    </a>
+                {% endif %}
+
+                {% if perms.relacionamento.generate_name_reporter %}
+                <a class="btn btn-outline-warning btn-lg" role="button"
+                   data-bs-toggle="tooltip" data-bs-placement="top"
+                   title="Atualizar nome"
+                   href="{% url 'relacionamento:reporter_generate_name' objeto.id %}">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+                {% endif %}
+
+                {% if perms.relacionamento.change_reporter%}
+                <a class="btn btn-outline-info btn-lg" role="button"
+                   data-bs-toggle="tooltip" data-bs-placement="top"
+                   title="Atualizar dados"
+                   href="{% url 'relacionamento:reporter_update' objeto.id %}">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                {% endif %}
+
+                {% if perms.relacionamento.delete_reporter%}
+                    <a class="btn btn-outline-danger btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Deletar com funções"
+                       href="{% url 'relacionamento:reporter_delete' objeto.id %}">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </td>
+        <td>
+            <div>
+                {% if perms.relacionamento.view_reporter%}
+                    <a class="btn btn-outline-primary btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Detalhar com classe"
+                       href="{% url 'relacionamento:classe_reporter_detail' objeto.id %}">
+                        <i class="bi bi-card-list"></i>
+                    </a>
+                {% endif %}
+
+                <a class="btn btn-outline-warning btn-lg" role="button"
+                   data-bs-toggle="tooltip" data-bs-placement="top"
+                   title="Atualizar nome com classe"
+                   href="{% url 'relacionamento:classe_reporter_generate_name' objeto.id %}">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+
+                {% if perms.relacionamento.change_reporter%}
+                    <a class="btn btn-outline-info btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Atualizar dados com classe"
+                       href="{% url 'relacionamento:classe_reporter_update' objeto.id %}">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                {% endif %}
+
+                {% if perms.relacionamento.delete_reporter%}
+                    <a class="btn btn-outline-danger btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Deletar com classe"
+                       href="{% url 'relacionamento:classe_reporter_delete' objeto.id %}">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </td>
+        <td>
+            <div>
+                <a class="btn btn-outline-primary btn-lg" role="button"
+                       data-bs-toggle="tooltip" data-bs-placement="top"
+                       title="Detalhar com classe"
+                       href="{% url 'relacionamento:generic_reporter_detail' objeto.id %}">
+                        <i class="bi bi-card-list"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock content%}
+
